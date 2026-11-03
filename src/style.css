@@ -198,39 +198,51 @@ img {
 #leo,
 #games,
 #about {
-  scroll-margin-top: 96px;
+  scroll-margin-top: 84px;
 }
 
 .nav {
   max-width: 1180px;
   margin: 0 auto;
-  padding: 14px 24px;
+  padding: 12px 20px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   text-decoration: none;
   color: var(--ink);
+  min-width: 0;
 }
 
 .logo img {
-  width: 60px;
-  height: 44px;
+  width: 48px;
+  height: 36px;
   object-fit: contain;
+  flex-shrink: 0;
 }
 
 .logo span {
   font-family: 'Luckiest Guy', 'Baloo 2', sans-serif;
-  font-size: clamp(20px, 4vw, 30px);
+  font-size: clamp(18px, 3.5vw, 28px);
   letter-spacing: 1px;
-  padding-top: 6px;
+  padding-top: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
 }
 
 .nav-links {
@@ -238,6 +250,28 @@ img {
   flex-wrap: wrap;
   gap: 10px;
   align-items: center;
+  margin-left: auto;
+}
+
+.menu-btn {
+  display: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--sun);
+  border: 3px solid var(--ink);
+  box-shadow: 0 3px 0 var(--ink);
+  cursor: pointer;
+  padding: 10px 8px;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.menu-btn span {
+  display: block;
+  height: 3px;
+  background: var(--ink);
+  border-radius: 2px;
 }
 
 .pill {
@@ -266,7 +300,8 @@ img {
 
 .mute-btn {
   min-height: 44px;
-  padding: 8px 14px;
+  min-width: 44px;
+  padding: 8px 12px;
   border-radius: 999px;
   background: var(--white);
   border: 3px solid var(--ink);
@@ -1268,10 +1303,35 @@ img {
   display: none !important;
 }
 
-@media (max-width: 720px) {
-  /* Don't pin the header on phones — it was covering Games */
-  .site-header {
-    position: static;
+@media (max-width: 900px) {
+  .nav-actions {
+    margin-left: auto;
+  }
+
+  .menu-btn {
+    display: flex;
+  }
+
+  /* Collapsed by default — hamburger opens full-width links under the bar */
+  .nav-links {
+    display: none;
+    order: 3;
+    width: 100%;
+    margin-left: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 4px 0 8px;
+  }
+
+  .site-header.menu-open .nav-links {
+    display: flex;
+  }
+
+  .nav-links .pill {
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   #top,
@@ -1279,66 +1339,127 @@ img {
   #leo,
   #games,
   #about {
-    scroll-margin-top: 12px;
+    scroll-margin-top: 72px;
+  }
+}
+
+@media (max-width: 720px) {
+  .site-header {
+    position: sticky;
+    top: 0;
+  }
+
+  /* While playing, shrink to a thin bar so games stay on screen */
+  body.games-focus .site-header {
+    border-bottom-width: 3px;
+  }
+
+  body.games-focus .logo span {
+    max-width: 140px;
+  }
+
+  body.games-focus .site-header.menu-open .nav-links {
+    max-height: 70vh;
+    overflow: auto;
   }
 
   .nav {
-    padding: 10px 12px;
+    padding: 8px 12px;
     gap: 8px;
   }
 
   .logo span {
-    font-size: 18px;
+    font-size: 16px;
   }
 
-  .nav-links {
-    width: 100%;
-    gap: 8px;
+  .logo img {
+    width: 36px;
+    height: 28px;
   }
 
-  .pill {
-    padding: 8px 12px;
-    font-size: 14px;
-    flex: 1 1 auto;
-    text-align: center;
+  .mute-btn,
+  .menu-btn {
+    min-height: 40px;
+    min-width: 40px;
+    height: 40px;
+    width: 40px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .menu-btn {
+    flex-direction: column;
+    padding: 9px 8px;
+  }
+
+  .games-header .section-title {
+    font-size: clamp(28px, 8vw, 40px);
   }
 
   .games-inner {
-    padding: 24px 14px 64px;
-    gap: 18px;
+    padding: 20px 12px 48px;
+    gap: 14px;
   }
 
   .game-tabs {
-    position: static;
-    background: transparent;
-    padding: 0;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 8px;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+  }
+
+  .game-tabs .tab {
+    flex: 0 0 auto;
+    min-height: 42px;
+    padding: 8px 12px;
+    font-size: 14px;
+    white-space: nowrap;
   }
 
   .game-board {
-    padding: 18px 14px;
+    padding: 14px 10px;
     min-height: 0;
-    border-radius: 22px;
+    border-radius: 18px;
+    box-shadow: 8px 8px 0 var(--ink);
   }
 
-  .tab {
-    min-height: 48px;
-    padding: 10px 14px;
-    font-size: 15px;
+  .game-panel h3 {
+    font-size: clamp(24px, 7vw, 34px);
+  }
+
+  .status {
+    font-size: 16px;
+    padding: 8px 14px;
   }
 
   .section-title {
-    font-size: clamp(34px, 9vw, 52px);
+    font-size: clamp(32px, 9vw, 48px);
   }
 
   .hero-inner {
-    padding: 48px 16px 24px;
-    gap: 28px;
+    padding: 36px 14px 20px;
+    gap: 20px;
+  }
+
+  .hero-lead {
+    font-size: 18px;
+  }
+
+  .btn {
+    padding: 14px 18px;
+    font-size: 17px;
   }
 
   .hero-stage {
     height: auto;
-    min-height: 380px;
-    width: min(100%, 360px);
+    min-height: 340px;
+    width: min(100%, 340px);
+    margin: 0 auto;
   }
 
   .leo-says,
@@ -1350,46 +1471,105 @@ img {
   .fact-grid,
   .stat-row {
     grid-template-columns: 1fr 1fr;
+    gap: 10px;
   }
 
   .cards {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 10px;
+    gap: 8px;
   }
 
   .card {
-    height: 88px;
-    font-size: 32px;
+    height: 84px;
+    font-size: 28px;
+    border-radius: 14px;
   }
 
   .spots {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
   }
 
   .spot {
-    height: 140px;
+    height: 130px;
+    border-radius: 18px;
+  }
+
+  .holes {
+    gap: 10px;
+  }
+
+  .hole {
+    height: 88px;
   }
 
   .hero-circle {
-    left: 12px;
-    width: calc(100% - 24px);
+    left: 10px;
+    width: calc(100% - 20px);
+    height: auto;
+    aspect-ratio: 1;
   }
 
   .hero-hi {
-    font-size: clamp(40px, 12vw, 64px);
+    font-size: clamp(36px, 11vw, 56px);
+  }
+
+  .hero-book {
+    font-size: clamp(28px, 8vw, 42px);
+    padding: 10px 14px 4px;
   }
 
   .book-layout,
   .leo-layout,
   .about-row {
-    gap: 28px;
+    gap: 24px;
+  }
+
+  .book-spine-row {
+    width: min(260px, 78vw);
+    height: 340px;
+  }
+
+  .leo-circle {
+    width: min(280px, 82vw);
+    height: min(280px, 82vw);
+  }
+
+  .photo-wrap {
+    padding-top: 90px;
+  }
+
+  .photo-frame {
+    width: min(280px, 85vw);
   }
 
   .section-inner,
   .leo-layout,
   .about-inner {
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .dress-layout {
+    gap: 20px;
+  }
+
+  .cta-row {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 420px) {
+  .logo span {
+    max-width: 150px;
+  }
+
+  .stat-row {
+    grid-template-columns: 1fr;
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

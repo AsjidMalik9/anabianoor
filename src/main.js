@@ -55,18 +55,23 @@ function makeDeck() {
 
 const app = document.getElementById('app')
 app.innerHTML = `
-  <header class="site-header">
+  <header class="site-header" id="site-header">
     <nav class="nav">
       <a class="logo" href="#top">
-        <img src="${LEO_HEAD}" alt="" width="60" height="44" />
+        <img src="${LEO_HEAD}" alt="" width="44" height="32" />
         <span>Anabia's Story World</span>
       </a>
-      <div class="nav-links">
+      <div class="nav-links" id="nav-links">
         <a class="pill yellow lift" href="#book">My Book</a>
         <a class="pill pink lift" href="#leo">Meet Leo</a>
         <a class="pill mint lift" href="#games">Games</a>
         <a class="pill lilac lift" href="#about">Meet Anabia</a>
-        <button type="button" class="mute-btn" id="mute">${isMuted() ? '🔇' : '🔊'}</button>
+      </div>
+      <div class="nav-actions">
+        <button type="button" class="mute-btn" id="mute" aria-label="Toggle sound">${isMuted() ? '🔇' : '🔊'}</button>
+        <button type="button" class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </nav>
   </header>
@@ -272,6 +277,31 @@ app.innerHTML = `
 `
 
 const muteBtn = document.getElementById('mute')
+const menuBtn = document.getElementById('menu-btn')
+const navLinks = document.getElementById('nav-links')
+const siteHeader = document.getElementById('site-header')
+
+function closeMenu() {
+  siteHeader.classList.remove('menu-open')
+  menuBtn.setAttribute('aria-expanded', 'false')
+  menuBtn.setAttribute('aria-label', 'Open menu')
+}
+
+function openMenu() {
+  siteHeader.classList.add('menu-open')
+  menuBtn.setAttribute('aria-expanded', 'true')
+  menuBtn.setAttribute('aria-label', 'Close menu')
+}
+
+menuBtn.addEventListener('click', () => {
+  if (siteHeader.classList.contains('menu-open')) closeMenu()
+  else openMenu()
+})
+
+navLinks.querySelectorAll('a').forEach((a) => {
+  a.addEventListener('click', () => closeMenu())
+})
+
 muteBtn.addEventListener('click', async () => {
   await unlock()
   setMuted(!isMuted())
@@ -285,6 +315,18 @@ document.body.addEventListener(
   },
   { once: true }
 )
+
+// Compact header while Games is on screen so play area stays clear
+const gamesSection = document.getElementById('games')
+if (gamesSection && 'IntersectionObserver' in window) {
+  const io = new IntersectionObserver(
+    ([entry]) => {
+      document.body.classList.toggle('games-focus', entry.isIntersecting && entry.intersectionRatio > 0.2)
+    },
+    { threshold: [0.15, 0.35, 0.55] }
+  )
+  io.observe(gamesSection)
+}
 
 document.getElementById('pet-leo').addEventListener('click', async () => {
   await unlock()
