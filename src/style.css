@@ -19,8 +19,9 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  overflow-x: clip;
   max-width: 100%;
+  width: 100%;
 }
 
 body {
@@ -28,9 +29,16 @@ body {
   font-family: 'Nunito', system-ui, sans-serif;
   color: var(--ink);
   background: var(--sky);
-  overflow-x: hidden;
+  overflow-x: clip;
   max-width: 100%;
+  width: 100%;
   position: relative;
+}
+
+#app {
+  overflow-x: clip;
+  max-width: 100%;
+  width: 100%;
 }
 
 /* Kill sideways page scroll from wings / shadows / absolute art */
@@ -42,8 +50,9 @@ body {
 .leo-section,
 .games-section,
 .about-section {
-  overflow-x: hidden;
+  overflow-x: clip;
   max-width: 100%;
+  width: 100%;
 }
 
 a {
@@ -1583,12 +1592,52 @@ img {
   }
 
   .book-wing,
-  .hero-grass {
-    display: none;
+  .hero-grass,
+  .paw,
+  .leo-says,
+  .new-book,
+  .footer-peek {
+    display: none !important;
+  }
+
+  .book-cover,
+  .polaroid,
+  .fact,
+  .love,
+  .stat-card,
+  .meta-card,
+  .step {
+    transform: none !important;
+  }
+
+  .photo-peek {
+    left: 50%;
+    margin-left: 0;
+    transform: translateX(-50%);
+    width: min(160px, 50vw);
+  }
+
+  .sticker {
+    /* huge text-shadow was spilling past the screen edge */
+    text-shadow:
+      -2px -2px 0 var(--ink),
+      2px -2px 0 var(--ink),
+      -2px 2px 0 var(--ink),
+      2px 2px 0 var(--ink),
+      4px 5px 0 var(--ink);
   }
 
   .book-cover {
     transform: none;
+  }
+
+  .fact-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px;
+  }
+
+  .fact {
+    box-shadow: 4px 4px 0 var(--ink);
   }
 
   .book-spine-row {
