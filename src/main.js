@@ -77,6 +77,12 @@ app.innerHTML = `
     </nav>
   </header>
 
+  <div class="play-bar" id="play-bar" hidden>
+    <a href="#top" class="play-bar-back">← Home</a>
+    <span class="play-bar-title">Games with Leo</span>
+    <button type="button" class="mute-btn play-bar-mute" id="mute-play" aria-label="Toggle sound">${isMuted() ? '🔇' : '🔊'}</button>
+  </div>
+
   <section class="hero" id="top">
     <div class="hero-sun" aria-hidden="true">
       <svg class="spin" width="150" height="150" viewBox="0 0 150 150">
@@ -316,7 +322,7 @@ navLinks.querySelectorAll('a').forEach((a) => {
 muteBtn.addEventListener('click', async () => {
   await unlock()
   setMuted(!isMuted())
-  muteBtn.textContent = isMuted() ? '🔇' : '🔊'
+  syncMutes()
 })
 
 document.body.addEventListener(
@@ -327,16 +333,31 @@ document.body.addEventListener(
   { once: true }
 )
 
-// Compact chrome while Games is on screen so play area stays clear
+// On phones: leave the big header — use a slim play bar so games aren't covered
 const gamesSection = document.getElementById('games')
+const playBar = document.getElementById('play-bar')
+const mutePlay = document.getElementById('mute-play')
+
+function syncMutes() {
+  const label = isMuted() ? '🔇' : '🔊'
+  muteBtn.textContent = label
+  if (mutePlay) mutePlay.textContent = label
+}
+
+mutePlay?.addEventListener('click', async () => {
+  await unlock()
+  setMuted(!isMuted())
+  syncMutes()
+})
+
 function syncGamesFocus() {
-  const onGames = location.hash === '#games'
-  let visible = onGames
-  if (gamesSection) {
+  let visible = location.hash === '#games'
+  if (gamesSection && !visible) {
     const r = gamesSection.getBoundingClientRect()
-    visible = r.top < window.innerHeight * 0.65 && r.bottom > 80
+    visible = r.top < 120 && r.bottom > window.innerHeight * 0.35
   }
   document.body.classList.toggle('games-focus', visible)
+  if (playBar) playBar.hidden = !visible
   if (visible) closeMenu()
 }
 window.addEventListener('hashchange', syncGamesFocus)

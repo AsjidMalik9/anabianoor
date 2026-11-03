@@ -1425,6 +1425,40 @@ img {
   display: none !important;
 }
 
+.play-bar {
+  display: none;
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--ink);
+  color: var(--cream);
+  border-bottom: 3px solid var(--sun);
+}
+
+.play-bar-back {
+  color: var(--sun);
+  font-weight: 900;
+  text-decoration: none;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.play-bar-title {
+  font-family: 'Luckiest Guy', sans-serif;
+  font-size: 18px;
+  letter-spacing: 1px;
+  color: var(--sun);
+  padding-top: 2px;
+}
+
+.play-bar-mute {
+  box-shadow: 0 3px 0 #000;
+}
+
 @media (max-width: 900px) {
   .nav-actions {
     margin-left: auto;
@@ -1482,18 +1516,34 @@ img {
     top: 0;
   }
 
-  /* While playing, shrink to a thin bar so games stay on screen */
+  /* Playing games: hide the big header so tabs aren't covered */
   body.games-focus .site-header {
-    border-bottom-width: 3px;
+    display: none;
   }
 
-  body.games-focus .logo span {
-    max-width: 140px;
+  body.games-focus .play-bar {
+    display: flex;
   }
 
-  body.games-focus .site-header.menu-open .nav-links {
-    max-height: 70vh;
-    overflow: auto;
+  body.games-focus .game-tabs {
+    position: sticky;
+    top: 52px;
+    z-index: 55;
+    background: var(--sun);
+    padding-top: 8px;
+    margin: 0 -12px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  body.games-focus .games-inner {
+    padding-top: 8px;
+  }
+
+  body.games-focus .game-board {
+    box-shadow: 4px 4px 0 var(--ink);
+    margin: 0;
+    max-width: 100%;
   }
 
   .nav {
