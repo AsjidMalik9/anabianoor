@@ -10,6 +10,9 @@ const LEO_HEAD = '/assets/7d320cd100d2e470748a088899d68db2.png'
 const ANABIA = '/assets/3ff70f0aba58875c123f0e3ff933b489.png'
 const WING = '/assets/9bb3e9d787319358c5192545086f2eec.png'
 const PHOTO = '/assets/aff68749fa47d8a408643af3b80fc706.jpg'
+const PHOTO_POOL = '/assets/anabia-pool.jpg'
+const PHOTO_DUCKS = '/assets/anabia-ducks.jpg'
+const PHOTO_ADVENTURE = '/assets/anabia-adventure.jpg'
 
 const WHO = ['Leo the cat', 'a brave princess', 'a tiny dragon', 'my teacher', 'a silly robot']
 const WHERE = ['the moon', 'a candy forest', 'the bottom of the sea', 'a jungle full of monkeys', "a giant's kitchen"]
@@ -17,6 +20,46 @@ const WHAT = ['found a magic golden key', 'made friends with a talking fish', 'l
 const SPOT_NAMES = ['Bush', 'Box', 'Bed', 'Basket', 'Curtain', 'Tree']
 const SPOT_COLORS = ['#7FD8BE', '#FFB067', '#C3B1FF', '#FF8FA3', '#8FD3F4', '#FFD23F']
 const CARD_KINDS = ['leo', 'fish', 'yarn', 'star', 'moon', 'book']
+
+const HEAD_ITEMS = ['hat', 'crown', 'explorer', 'flower']
+const EYE_ITEMS = ['glasses', 'shades']
+const WEAR_DEFAULT = {
+  hat: false,
+  crown: false,
+  explorer: false,
+  flower: false,
+  glasses: false,
+  shades: false,
+  bow: false,
+  scarf: false,
+  cape: false,
+  backpack: false,
+  badge: false,
+  mustache: false,
+}
+const SCENES = {
+  sunny: { bg: 'linear-gradient(160deg,#FFF3A3 0%,#FFD23F 100%)', label: 'Sunny' },
+  candy: { bg: 'linear-gradient(160deg,#FFD6E7 0%,#FF8FA3 100%)', label: 'Candy' },
+  ocean: { bg: 'linear-gradient(160deg,#C9ECFF 0%,#8FD3F4 100%)', label: 'Ocean' },
+  jungle: { bg: 'linear-gradient(160deg,#C8F5E4 0%,#7FD8BE 100%)', label: 'Jungle' },
+  night: { bg: 'linear-gradient(160deg,#2A3350 0%,#1F2A44 100%)', label: 'Night' },
+}
+
+function loadWear() {
+  try {
+    const raw = JSON.parse(localStorage.getItem('leo-wear') || 'null')
+    if (raw && typeof raw === 'object') return { ...WEAR_DEFAULT, ...raw }
+  } catch {}
+  return { ...WEAR_DEFAULT }
+}
+
+function loadScene() {
+  try {
+    const s = localStorage.getItem('leo-scene')
+    if (s && SCENES[s]) return s
+  } catch {}
+  return 'sunny'
+}
 
 const state = {
   game: 'find',
@@ -34,10 +77,26 @@ const state = {
   running: false,
   played: false,
   best: 0,
-  wear: { hat: false, crown: false, glasses: false, bow: false },
+  wear: loadWear(),
+  scene: loadScene(),
   who: 0,
   where: 0,
   what: 0,
+}
+
+function saveWear() {
+  try {
+    localStorage.setItem('leo-wear', JSON.stringify(state.wear))
+    localStorage.setItem('leo-scene', state.scene)
+  } catch {}
+}
+
+function exclusiveToggle(group, key) {
+  const on = !state.wear[key]
+  group.forEach((k) => {
+    state.wear[k] = false
+  })
+  state.wear[key] = on
 }
 
 let clock
@@ -220,27 +279,29 @@ app.innerHTML = `
     <svg class="wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0,60 C240,120 480,0 720,60 C960,120 1200,0 1440,60 L1440,120 L0,120 Z" fill="#7FD8BE"/></svg>
   </section>
 
-  <section class="section about-section" id="about">
+  <section class="section about-section" id="about" aria-labelledby="meet-anabia-heading">
     <div class="about-inner">
-      <div>
-        <p class="chip white">MEET THE AUTHOR</p>
-        <h2 class="section-title sticker" style="margin-top:12px">Meet Anabia!</h2>
-      </div>
+      <header class="about-intro">
+        <p class="chip white">YOUNG AUTHOR</p>
+        <h2 class="section-title sticker" id="meet-anabia-heading">Meet Anabia Noor</h2>
+        <p class="about-seo-lead">Anabia Noor is a grade 2 author, storyteller, and the creator of <em>Leo, Let's Go!</em> — a kids adventure starring Leo the fluffy Persian cat.</p>
+      </header>
+
       <div class="about-row">
         <div class="photo-wrap">
           <div class="photo-frame">
-            <div class="photo-peek peek"><img src="${LEO_HEAD}" alt="Leo peeking over Anabia's photo" width="200" /></div>
-            <div class="polaroid">
-              <img src="${PHOTO}" alt="Anabia sitting in the sand with her pink bow" />
-              <p class="caption">The real me!</p>
-            </div>
+            <div class="photo-peek peek"><img src="${LEO_HEAD}" alt="Leo the fluffy Persian cat peeking over Anabia Noor's photo" width="200" height="160" /></div>
+            <figure class="polaroid">
+              <img src="${PHOTO}" alt="Anabia Noor, young author, sitting in the sand with a pink bow" width="288" height="280" loading="lazy" />
+              <figcaption class="caption">Anabia Noor!</figcaption>
+            </figure>
           </div>
         </div>
         <div class="about-copy">
-          <p class="about-hi">Hi! My name is Anabia. I am in grade 2 and I just wrote my very first book!</p>
-          <p style="margin:0;font-size:20px;line-height:1.6;font-weight:700">I love adventures, writing stories, my fluffy cat Leo, and I love my sissy so much! This website is my story world — come play, then go find Leo in my book!</p>
+          <p class="about-hi">Hi! My name is <strong>Anabia Noor</strong>. I am in grade 2 and I just wrote my very first book!</p>
+          <p style="margin:0;font-size:20px;line-height:1.6;font-weight:700">I love adventures, writing stories, swimming, ducks, my fluffy cat Leo, and I love my sissy so much! This website is my story world — come play, then go find Leo in my book!</p>
           <p style="margin:0;font-size:18px;font-weight:800">
-            Follow me on Instagram:
+            Follow Anabia Noor on Instagram:
             <a href="https://www.instagram.com/anabicious/" target="_blank" rel="noopener noreferrer" style="color:#5B3FD6;text-decoration:none;border-bottom:3px solid #FFD23F">@anabicious</a>
           </p>
           <div class="stat-row">
@@ -250,7 +311,27 @@ app.innerHTML = `
           </div>
         </div>
       </div>
-      <h3 class="section-title sticker" style="font-size:clamp(32px,6vw,52px)">How I made my book</h3>
+
+      <div class="anabia-gallery-block">
+        <h3 class="section-title sticker" style="font-size:clamp(28px,5vw,44px)">Anabia's adventures</h3>
+        <p class="gallery-lead">Real photos of young author Anabia Noor — swimming, feeding ducks, and exploring!</p>
+        <div class="anabia-gallery">
+          <figure class="gallery-shot lift" style="--tilt:-3deg">
+            <img src="${PHOTO_POOL}" alt="Anabia Noor swimming in a blue pool with pink floaties" width="528" height="720" loading="lazy" />
+            <figcaption>Pool day!</figcaption>
+          </figure>
+          <figure class="gallery-shot lift" style="--tilt:2deg">
+            <img src="${PHOTO_DUCKS}" alt="Anabia Noor hugging a Hello Kitty plush by a duck pond" width="538" height="712" loading="lazy" />
+            <figcaption>Duck friends</figcaption>
+          </figure>
+          <figure class="gallery-shot lift" style="--tilt:-2deg">
+            <img src="${PHOTO_ADVENTURE}" alt="Anabia Noor on a fun adventure at Dome with explorer friends" width="528" height="702" loading="lazy" />
+            <figcaption>Explorer mode</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <h3 class="section-title sticker" style="font-size:clamp(32px,6vw,52px)">How Anabia made her book</h3>
       <div class="steps">
         <div class="step lift">
           <p class="step-num" style="background:#FFD23F">1</p>
@@ -268,7 +349,7 @@ app.innerHTML = `
           <p style="margin:0;font-size:17px;line-height:1.5;font-weight:700">Now you can meet Leo here — and in the story!</p>
         </div>
       </div>
-      <h3 class="section-title sticker" style="font-size:clamp(32px,6vw,52px)">Things I love</h3>
+      <h3 class="section-title sticker" style="font-size:clamp(32px,6vw,52px)">Things Anabia loves</h3>
       <div class="loves">
         <div class="love lift" style="background:#FF8FA3;transform:rotate(-2deg)"><p style="margin:0;font-size:16px;font-weight:700">I love</p><p style="margin:6px 0 0;font-family:'Luckiest Guy',sans-serif;font-size:30px;letter-spacing:1px">My sissy!</p></div>
         <div class="love lift" style="background:#FFD23F;transform:rotate(1.5deg)"><p style="margin:0;font-size:16px;font-weight:700">My favorite color</p><p style="margin:6px 0 0;font-family:'Luckiest Guy',sans-serif;font-size:30px;letter-spacing:1px">Pink!</p></div>
@@ -282,8 +363,8 @@ app.innerHTML = `
     <div class="footer-peek peek" aria-hidden="true"><img src="${LEO_HEAD}" alt="" width="130" /></div>
     <div class="footer-inner">
       <div>
-        <p class="footer-brand">Anabia's Story World</p>
-        <p style="margin:8px 0 0;font-size:16px;font-weight:700">Made with love by my family (and Leo)</p>
+        <p class="footer-brand">Anabia Noor's Story World</p>
+        <p style="margin:8px 0 0;font-size:16px;font-weight:700">Official site for young author Anabia Noor · Made with love by my family (and Leo)</p>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start">
         <a href="https://www.instagram.com/anabicious/" target="_blank" rel="noopener noreferrer" style="color:#FFD23F;font-weight:900;font-size:18px;text-decoration:none">Instagram @anabicious</a>
@@ -678,51 +759,172 @@ function renderCatch() {
   })
 }
 
+function accessorySvgs(w) {
+  return [
+    w.cape
+      ? `<svg class="dress-cape pop" viewBox="0 0 120 100" aria-hidden="true"><path d="M20 8 Q60 28 100 8 L108 92 Q60 72 12 92 Z" fill="#D62839" stroke="#1F2A44" stroke-width="3"/><path d="M28 18 Q60 34 92 18" fill="none" stroke="#FF8FA3" stroke-width="4"/></svg>`
+      : '',
+    w.backpack
+      ? `<svg class="dress-backpack pop" viewBox="0 0 70 80" aria-hidden="true"><rect x="10" y="18" width="50" height="52" rx="12" fill="#FFB067" stroke="#1F2A44" stroke-width="3"/><path d="M22 18 V10 H48 V18" fill="none" stroke="#1F2A44" stroke-width="3"/><rect x="22" y="34" width="26" height="18" rx="6" fill="#FFF" stroke="#1F2A44" stroke-width="3"/></svg>`
+      : '',
+    w.hat
+      ? `<svg class="dress-hat pop" viewBox="0 0 80 90" aria-hidden="true"><path d="M40 6 L74 86 L6 86 Z" fill="#FF8FA3" stroke="#1F2A44" stroke-width="3"/><circle cx="40" cy="8" r="9" fill="#FFD23F" stroke="#1F2A44" stroke-width="3"/></svg>`
+      : '',
+    w.crown
+      ? `<svg class="dress-crown pop" viewBox="0 0 96 56" aria-hidden="true"><path d="M6 52 L6 14 L28 32 L48 4 L68 32 L90 14 L90 52 Z" fill="#FFD23F" stroke="#1F2A44" stroke-width="3"/><circle cx="48" cy="38" r="6" fill="#D62839"/><circle cx="18" cy="40" r="4" fill="#8FD3F4"/><circle cx="78" cy="40" r="4" fill="#7FD8BE"/></svg>`
+      : '',
+    w.explorer
+      ? `<svg class="dress-explorer pop" viewBox="0 0 110 50" aria-hidden="true"><ellipse cx="55" cy="38" rx="50" ry="10" fill="#8B5A2B" stroke="#1F2A44" stroke-width="3"/><path d="M20 38 Q55 2 90 38" fill="#C47A3A" stroke="#1F2A44" stroke-width="3"/></svg>`
+      : '',
+    w.flower
+      ? `<svg class="dress-flower pop" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="8" fill="#FFD23F" stroke="#1F2A44" stroke-width="2.5"/><circle cx="18" cy="22" r="9" fill="#FF8FA3" stroke="#1F2A44" stroke-width="2.5"/><circle cx="46" cy="22" r="9" fill="#FF8FA3" stroke="#1F2A44" stroke-width="2.5"/><circle cx="18" cy="42" r="9" fill="#C3B1FF" stroke="#1F2A44" stroke-width="2.5"/><circle cx="46" cy="42" r="9" fill="#8FD3F4" stroke="#1F2A44" stroke-width="2.5"/></svg>`
+      : '',
+    w.glasses
+      ? `<svg class="dress-glasses pop" viewBox="0 0 106 40" aria-hidden="true"><circle cx="29" cy="20" r="17" fill="none" stroke="#1F2A44" stroke-width="5"/><circle cx="77" cy="20" r="17" fill="none" stroke="#1F2A44" stroke-width="5"/><path d="M46 18 Q 53 10 60 18" stroke="#1F2A44" stroke-width="4" fill="none"/><path d="M12 18 H2 M104 18 H94" stroke="#1F2A44" stroke-width="4"/></svg>`
+      : '',
+    w.shades
+      ? `<svg class="dress-shades pop" viewBox="0 0 110 36" aria-hidden="true"><rect x="4" y="8" width="42" height="24" rx="8" fill="#1F2A44"/><rect x="64" y="8" width="42" height="24" rx="8" fill="#1F2A44"/><path d="M46 18 H64" stroke="#1F2A44" stroke-width="4"/><path d="M4 16 H0 M106 16 H110" stroke="#1F2A44" stroke-width="3"/></svg>`
+      : '',
+    w.mustache
+      ? `<svg class="dress-mustache pop" viewBox="0 0 90 28" aria-hidden="true"><path d="M45 8 Q20 4 8 16 Q28 10 45 18 Q62 10 82 16 Q70 4 45 8 Z" fill="#5A3A22" stroke="#1F2A44" stroke-width="2.5"/></svg>`
+      : '',
+    w.bow
+      ? `<svg class="dress-bow pop" viewBox="0 0 76 40" aria-hidden="true"><path d="M38 20 L6 4 L6 36 Z M38 20 L70 4 L70 36 Z" fill="#D62839" stroke="#1F2A44" stroke-width="3"/><circle cx="38" cy="20" r="8" fill="#FF8FA3" stroke="#1F2A44" stroke-width="3"/></svg>`
+      : '',
+    w.scarf
+      ? `<svg class="dress-scarf pop" viewBox="0 0 100 70" aria-hidden="true"><path d="M10 18 Q50 38 90 18" fill="none" stroke="#7FD8BE" stroke-width="14" stroke-linecap="round"/><path d="M10 18 Q50 38 90 18" fill="none" stroke="#1F2A44" stroke-width="3"/><path d="M58 28 L70 62" stroke="#7FD8BE" stroke-width="12" stroke-linecap="round"/><path d="M58 28 L70 62" stroke="#1F2A44" stroke-width="3"/></svg>`
+      : '',
+    w.badge
+      ? `<svg class="dress-badge pop" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18" fill="#FFD23F" stroke="#1F2A44" stroke-width="3"/><text x="24" y="29" text-anchor="middle" font-size="16" font-weight="900" fill="#1F2A44">L</text></svg>`
+      : '',
+  ].join('')
+}
+
+function wearCount() {
+  return Object.values(state.wear).filter(Boolean).length
+}
+
 function renderDress() {
   const w = state.wear
+  const scene = SCENES[state.scene] || SCENES.sunny
   const root = document.getElementById('panel-dress')
+  const groups = [
+    {
+      title: 'Hats',
+      items: [
+        ['hat', 'Party hat'],
+        ['crown', 'Crown'],
+        ['explorer', 'Explorer hat'],
+        ['flower', 'Flower'],
+      ],
+    },
+    {
+      title: 'Eyes',
+      items: [
+        ['glasses', 'Glasses'],
+        ['shades', 'Sunglasses'],
+        ['mustache', 'Mustache'],
+      ],
+    },
+    {
+      title: 'Style',
+      items: [
+        ['bow', 'Bow tie'],
+        ['scarf', 'Scarf'],
+        ['cape', 'Cape'],
+        ['backpack', 'Backpack'],
+        ['badge', 'Explorer badge'],
+      ],
+    },
+  ]
+
   root.innerHTML = `
     <div class="dress-layout">
-      <div class="dress-leo">
-        <img src="${LEO}" alt="Leo dressed up" />
-        ${w.hat ? `<svg class="dress-hat pop" width="80" height="90" viewBox="0 0 80 90"><path d="M40 6 L74 86 L6 86 Z" fill="#FF8FA3" stroke="#1F2A44" stroke-width="3"/><circle cx="40" cy="8" r="9" fill="#FFD23F" stroke="#1F2A44" stroke-width="3"/></svg>` : ''}
-        ${w.crown ? `<svg class="dress-crown pop" width="96" height="56" viewBox="0 0 96 56"><path d="M6 52 L6 14 L28 32 L48 4 L68 32 L90 14 L90 52 Z" fill="#FFD23F" stroke="#1F2A44" stroke-width="3"/><circle cx="48" cy="38" r="6" fill="#D62839"/></svg>` : ''}
-        ${w.glasses ? `<svg class="dress-glasses pop" width="106" height="40" viewBox="0 0 106 40"><circle cx="29" cy="20" r="17" fill="#1F2A44"/><circle cx="77" cy="20" r="17" fill="#1F2A44"/><path d="M44 18 Q 53 10 62 18" stroke="#1F2A44" stroke-width="4" fill="none"/></svg>` : ''}
-        ${w.bow ? `<svg class="dress-bow pop" width="76" height="40" viewBox="0 0 76 40"><path d="M38 20 L6 4 L6 36 Z M38 20 L70 4 L70 36 Z" fill="#D62839" stroke="#1F2A44" stroke-width="3"/><circle cx="38" cy="20" r="8" fill="#FF8FA3" stroke="#1F2A44" stroke-width="3"/></svg>` : ''}
+      <div class="dress-stage" style="background:${scene.bg}">
+        <div class="dress-leo">
+          <img src="${LEO}" alt="Leo dressed up" />
+          ${accessorySvgs(w)}
+        </div>
+        <p class="dress-look-label">${wearCount() ? `${wearCount()} piece${wearCount() === 1 ? '' : 's'} on` : 'Plain Leo'}</p>
       </div>
-      <div style="flex:0 1 380px;display:flex;flex-direction:column;gap:16px">
-        <h3 style="text-align:left">Dress Up Leo</h3>
-        <p style="margin:0;font-size:19px;font-weight:700;line-height:1.5">Make Leo look super fancy! Tap to put things on or take them off.</p>
-        <div class="outfit-grid">
-          ${[
-            ['hat', 'Party hat'],
-            ['crown', 'Crown'],
-            ['glasses', 'Cool glasses'],
-            ['bow', 'Bow tie'],
-          ]
+      <div class="dress-controls">
+        <h3>Dress Up Leo</h3>
+        <p class="dress-hint">Mix and match! Pick a scene, then tap accessories on or off. Your look is saved.</p>
+
+        <p class="dress-cat">Scene</p>
+        <div class="scene-row">
+          ${Object.entries(SCENES)
             .map(
-              ([key, label]) =>
-                `<button type="button" class="tab lift" data-wear="${key}" style="background:${w[key] ? '#FFD23F' : '#fff'};color:#1F2A44">${label}</button>`
+              ([key, s]) =>
+                `<button type="button" class="scene-btn lift ${state.scene === key ? 'on' : ''}" data-scene="${key}" style="background:${s.bg}" aria-label="${s.label}" title="${s.label}"></button>`
             )
             .join('')}
         </div>
-        <button type="button" class="chip-btn" id="undress" style="align-self:flex-start">Take it all off</button>
+
+        ${groups
+          .map(
+            (g) => `
+          <p class="dress-cat">${g.title}</p>
+          <div class="outfit-grid">
+            ${g.items
+              .map(
+                ([key, label]) =>
+                  `<button type="button" class="wear-btn lift ${w[key] ? 'on' : ''}" data-wear="${key}">${label}</button>`
+              )
+              .join('')}
+          </div>`
+          )
+          .join('')}
+
+        <div class="dress-actions">
+          <button type="button" class="chip-btn" id="random-look">Surprise me!</button>
+          <button type="button" class="chip-btn" id="undress">Take it all off</button>
+        </div>
       </div>
     </div>
   `
+
   root.querySelectorAll('[data-wear]').forEach((btn) => {
     btn.addEventListener('click', () => {
       const key = btn.dataset.wear
-      state.wear[key] = !state.wear[key]
-      if (key === 'hat' && state.wear.hat) state.wear.crown = false
-      if (key === 'crown' && state.wear.crown) state.wear.hat = false
+      if (HEAD_ITEMS.includes(key)) exclusiveToggle(HEAD_ITEMS, key)
+      else if (EYE_ITEMS.includes(key)) exclusiveToggle(EYE_ITEMS, key)
+      else state.wear[key] = !state.wear[key]
+      saveWear()
       sfx('tap')
       renderDress()
     })
   })
+
+  root.querySelectorAll('[data-scene]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      state.scene = btn.dataset.scene
+      saveWear()
+      sfx('whoosh')
+      renderDress()
+    })
+  })
+
   root.querySelector('#undress').addEventListener('click', () => {
-    state.wear = { hat: false, crown: false, glasses: false, bow: false }
+    state.wear = { ...WEAR_DEFAULT }
+    saveWear()
     sfx('whoosh')
+    renderDress()
+  })
+
+  root.querySelector('#random-look').addEventListener('click', () => {
+    state.wear = { ...WEAR_DEFAULT }
+    const head = HEAD_ITEMS[Math.floor(Math.random() * HEAD_ITEMS.length)]
+    const eye = EYE_ITEMS[Math.floor(Math.random() * (EYE_ITEMS.length + 1))]
+    state.wear[head] = true
+    if (eye) state.wear[eye] = true
+    ;['bow', 'scarf', 'cape', 'backpack', 'badge', 'mustache'].forEach((k) => {
+      state.wear[k] = Math.random() > 0.55
+    })
+    const scenes = Object.keys(SCENES)
+    state.scene = scenes[Math.floor(Math.random() * scenes.length)]
+    saveWear()
+    sfx('chime')
     renderDress()
   })
 }

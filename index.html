@@ -6,11 +6,11 @@
     <title>Anabia Noor | Young Author · Anabia's Story World · Leo, Let's Go!</title>
     <meta
       name="description"
-      content="Meet Anabia Noor, grade 2 young author of Leo, Let's Go! Play games with Leo the fluffy Persian cat. Official site + Instagram @anabicious."
+      content="Meet Anabia Noor — grade 2 young author of Leo, Let's Go! Official site with photos, games starring Leo the fluffy Persian cat, and Instagram @anabicious."
     />
     <meta
       name="keywords"
-      content="Anabia Noor, Anabia, Anabicious, Leo Let's Go, young author, kids storybook, children's book, grade 2 author, fluffy Persian cat Leo"
+      content="Anabia Noor, Meet Anabia Noor, Anabia, Anabicious, Leo Let's Go, young author, kids storybook, children's book, grade 2 author, fluffy Persian cat Leo"
     />
     <meta name="author" content="Anabia Noor" />
     <meta name="robots" content="index, follow" />
@@ -18,21 +18,21 @@
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://anabianoor.com/" />
-    <meta property="og:title" content="Anabia Noor — Anabia's Story World" />
+    <meta property="og:title" content="Meet Anabia Noor — Young Author · Anabia's Story World" />
     <meta
       property="og:description"
-      content="Grade 2 author Anabia Noor wrote Leo, Let's Go! Meet Leo, play 5 games, and follow @anabicious on Instagram."
+      content="Meet Anabia Noor, grade 2 author of Leo, Let's Go! Photos, games with Leo, and Instagram @anabicious."
     />
-    <meta property="og:image" content="https://anabianoor.com/assets/3ff70f0aba58875c123f0e3ff933b489.png" />
+    <meta property="og:image" content="https://anabianoor.com/assets/anabia-ducks.jpg" />
     <meta property="og:site_name" content="Anabia's Story World" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Anabia Noor — Anabia's Story World" />
+    <meta name="twitter:title" content="Meet Anabia Noor — Young Author" />
     <meta
       name="twitter:description"
       content="Young author Anabia Noor · book Leo, Let's Go! · Instagram @anabicious"
     />
-    <meta name="twitter:image" content="https://anabianoor.com/assets/3ff70f0aba58875c123f0e3ff933b489.png" />
+    <meta name="twitter:image" content="https://anabianoor.com/assets/anabia-ducks.jpg" />
 
     <link rel="icon" href="/assets/7d320cd100d2e470748a088899d68db2.png" type="image/png" />
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
@@ -55,17 +55,34 @@
           },
           {
             "@type": "Person",
+            "@id": "https://anabianoor.com/#about",
             "name": "Anabia Noor",
             "alternateName": ["Anabia", "Anabicious"],
-            "url": "https://anabianoor.com/",
+            "url": "https://anabianoor.com/#about",
+            "image": [
+              "https://anabianoor.com/assets/aff68749fa47d8a408643af3b80fc706.jpg",
+              "https://anabianoor.com/assets/anabia-pool.jpg",
+              "https://anabianoor.com/assets/anabia-ducks.jpg",
+              "https://anabianoor.com/assets/anabia-adventure.jpg"
+            ],
             "jobTitle": "Young author",
+            "description": "Anabia Noor is a grade 2 young author who wrote the children's adventure book Leo, Let's Go! featuring Leo the fluffy Persian cat.",
             "sameAs": ["https://www.instagram.com/anabicious/"],
-            "knowsAbout": ["children's books", "storytelling", "Leo the cat"]
+            "knowsAbout": ["children's books", "storytelling", "Leo the cat", "Leo Let's Go"]
+          },
+          {
+            "@type": "ProfilePage",
+            "@id": "https://anabianoor.com/#about-page",
+            "url": "https://anabianoor.com/#about",
+            "name": "Meet Anabia Noor",
+            "description": "About young author Anabia Noor — photos, book Leo Let's Go!, and Instagram @anabicious.",
+            "mainEntity": { "@id": "https://anabianoor.com/#about" },
+            "isPartOf": { "@type": "WebSite", "url": "https://anabianoor.com/" }
           },
           {
             "@type": "Book",
             "name": "Leo, Let's Go!",
-            "author": { "@type": "Person", "name": "Anabia Noor" },
+            "author": { "@id": "https://anabianoor.com/#about" },
             "url": "https://anabianoor.com/#book",
             "genre": "Children's adventure"
           }

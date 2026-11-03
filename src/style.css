@@ -1137,51 +1137,206 @@ img {
 .dress-layout {
   display: flex;
   flex-wrap: wrap;
-  gap: 40px;
-  align-items: center;
+  gap: 28px;
+  align-items: stretch;
   justify-content: center;
   width: 100%;
 }
 
+.dress-stage {
+  flex: 1 1 280px;
+  max-width: 360px;
+  border: 4px solid var(--ink);
+  border-radius: 28px;
+  padding: 28px 20px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: 360px;
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
 .dress-leo {
   position: relative;
-  width: min(300px, 80vw);
-  margin-top: 70px;
+  width: min(260px, 70vw);
+  margin-top: 48px;
 }
 
 .dress-leo img {
   display: block;
   width: 100%;
   height: auto;
+  position: relative;
+  z-index: 2;
+}
+
+.dress-look-label {
+  margin: 12px 0 0;
+  font-weight: 900;
+  font-size: 16px;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.75);
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  padding: 4px 14px;
+}
+
+.dress-controls {
+  flex: 1 1 300px;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dress-controls h3 {
+  text-align: left;
+  margin: 0;
+}
+
+.dress-hint {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.dress-cat {
+  margin: 8px 0 0;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.scene-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.scene-btn {
+  width: 44px;
+  height: 44px;
+  border: 3px solid var(--ink);
+  border-radius: 14px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.scene-btn.on {
+  outline: 4px solid #FFD23F;
+  outline-offset: 2px;
+}
+
+.wear-btn {
+  border: 3px solid var(--ink);
+  border-radius: 14px;
+  padding: 10px 12px;
+  font-weight: 900;
+  font-size: 15px;
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.wear-btn.on {
+  background: #FFD23F;
+}
+
+.dress-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
 }
 
 .dress-hat {
   position: absolute;
   left: 11%;
   top: -70px;
+  width: 42%;
   transform: rotate(-10deg);
+  z-index: 4;
 }
 .dress-crown {
   position: absolute;
   left: 9%;
   top: -36px;
+  width: 52%;
+  z-index: 4;
 }
-.dress-glasses {
+.dress-explorer {
+  position: absolute;
+  left: 4%;
+  top: -8%;
+  width: 58%;
+  z-index: 4;
+}
+.dress-flower {
+  position: absolute;
+  left: 58%;
+  top: -4%;
+  width: 28%;
+  z-index: 4;
+}
+.dress-glasses,
+.dress-shades {
   position: absolute;
   left: 7%;
   top: 14%;
   width: 35%;
+  z-index: 5;
+}
+.dress-mustache {
+  position: absolute;
+  left: 14%;
+  top: 28%;
+  width: 28%;
+  z-index: 5;
 }
 .dress-bow {
   position: absolute;
   left: 13%;
   top: 36%;
+  width: 34%;
+  z-index: 5;
+}
+.dress-scarf {
+  position: absolute;
+  left: 8%;
+  top: 30%;
+  width: 48%;
+  z-index: 3;
+}
+.dress-cape {
+  position: absolute;
+  left: 8%;
+  top: 22%;
+  width: 78%;
+  z-index: 1;
+}
+.dress-backpack {
+  position: absolute;
+  right: -6%;
+  top: 34%;
+  width: 28%;
+  z-index: 1;
+}
+.dress-badge {
+  position: absolute;
+  left: 58%;
+  top: 42%;
+  width: 18%;
+  z-index: 5;
 }
 
 .outfit-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: 10px;
 }
 
 .story-row {
@@ -1240,6 +1395,77 @@ img {
   display: flex;
   flex-direction: column;
   gap: 40px;
+}
+
+.about-intro {
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.about-seo-lead {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.55;
+  font-weight: 800;
+}
+
+.about-seo-lead em {
+  font-style: normal;
+  border-bottom: 3px solid #FFD23F;
+}
+
+.anabia-gallery-block {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.gallery-lead {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.anabia-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  align-items: end;
+}
+
+.gallery-shot {
+  margin: 0;
+  background: var(--white);
+  border: 4px solid var(--ink);
+  padding: 12px 12px 48px;
+  box-shadow: 7px 7px 0 var(--ink);
+  transform: rotate(var(--tilt, 0deg));
+}
+
+.gallery-shot img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border: 3px solid var(--ink);
+}
+
+.gallery-shot figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 12px;
+  text-align: center;
+  font-family: 'Luckiest Guy', sans-serif;
+  font-size: 22px;
+  letter-spacing: 1px;
+}
+
+.gallery-shot {
+  position: relative;
 }
 
 .about-row {
@@ -1510,6 +1736,18 @@ img {
   }
 }
 
+@media (max-width: 900px) {
+  .anabia-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .anabia-gallery .gallery-shot:last-child {
+    grid-column: 1 / -1;
+    max-width: 280px;
+    justify-self: center;
+  }
+}
+
 @media (max-width: 720px) {
   .site-header {
     position: sticky;
@@ -1730,6 +1968,16 @@ img {
   .leo-layout,
   .about-row {
     gap: 24px;
+  }
+
+  .anabia-gallery {
+    grid-template-columns: 1fr;
+    max-width: 320px;
+    margin-inline: auto;
+  }
+
+  .gallery-shot {
+    transform: none !important;
   }
 
   .book-wing,
