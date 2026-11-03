@@ -222,10 +222,90 @@ img {
 /* Leave room under sticky header when jumping to #book / #games / etc. */
 #top,
 #book,
+#story,
 #leo,
 #games,
 #about {
   scroll-margin-top: 84px;
+}
+
+.story-section {
+  background: #ffe08a;
+  color: var(--ink);
+}
+
+.story-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 24px 70px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: stretch;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.story-reader {
+  width: 100%;
+}
+
+.story-card {
+  background: var(--white);
+  border: 5px solid var(--ink);
+  border-radius: 28px;
+  box-shadow: 10px 10px 0 var(--ink);
+  padding: 28px 22px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.story-leo {
+  width: 88px;
+  height: auto;
+}
+
+.story-page-num {
+  margin: 0;
+  font-weight: 900;
+  font-size: 14px;
+  background: var(--cream);
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  padding: 6px 14px;
+}
+
+.story-emoji {
+  margin: 0;
+  font-size: 42px;
+  line-height: 1;
+}
+
+.story-card h3 {
+  margin: 0;
+  font-family: 'Luckiest Guy', sans-serif;
+  font-size: clamp(28px, 6vw, 40px);
+  letter-spacing: 1px;
+  color: var(--ink);
+}
+
+.story-text {
+  margin: 0;
+  font-size: clamp(17px, 3.5vw, 20px);
+  line-height: 1.55;
+  font-weight: 700;
+  max-width: 34rem;
+}
+
+.story-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 8px;
 }
 
 .nav {
@@ -1378,10 +1458,21 @@ img {
 
   #top,
   #book,
+  #story,
   #leo,
   #games,
   #about {
     scroll-margin-top: 72px;
+  }
+
+  .story-inner {
+    padding: 28px 14px 48px;
+  }
+
+  .story-card {
+    padding: 20px 14px;
+    border-radius: 20px;
+    box-shadow: 6px 6px 0 var(--ink);
   }
 }
 

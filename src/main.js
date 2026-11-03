@@ -63,9 +63,10 @@ app.innerHTML = `
       </a>
       <div class="nav-links" id="nav-links">
         <a class="pill yellow lift" href="#book">My Book</a>
-        <a class="pill pink lift" href="#leo">Meet Leo</a>
-        <a class="pill mint lift" href="#games">Games</a>
-        <a class="pill lilac lift" href="#about">Meet Anabia</a>
+        <a class="pill pink lift" href="#story">Funny Story</a>
+        <a class="pill mint lift" href="#leo">Meet Leo</a>
+        <a class="pill lilac lift" href="#games">Games</a>
+        <a class="pill" href="#about" style="background:#C3B1FF">Meet Anabia</a>
       </div>
       <div class="nav-actions">
         <button type="button" class="mute-btn" id="mute" aria-label="Toggle sound">${isMuted() ? '🔇' : '🔊'}</button>
@@ -151,12 +152,22 @@ app.innerHTML = `
           <div class="meta-card" style="background:#FFD23F;transform:rotate(-1deg)"><p class="label">Out on</p><p class="value">Soon!</p></div>
         </div>
         <div class="cta-row">
-          <a class="btn btn-yellow btn-sm lift" href="#games">Play a story game</a>
-          <a class="btn btn-white btn-sm lift" href="#about">Meet the author</a>
+          <a class="btn btn-yellow btn-sm lift" href="#story">Read a funny story</a>
+          <a class="btn btn-white btn-sm lift" href="#games">Play a game</a>
         </div>
       </div>
     </div>
-    <svg class="wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0,60 C240,120 480,0 720,60 C960,120 1200,0 1440,60 L1440,120 L0,120 Z" fill="#FFC2D1"/></svg>
+    <svg class="wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0,60 C240,120 480,0 720,60 C960,120 1200,0 1440,60 L1440,120 L0,120 Z" fill="#FFE08A"/></svg>
+  </section>
+
+  <section class="section story-section" id="story">
+    <div class="story-inner">
+      <p class="game-chip" style="background:#1F2A44;color:#FFD23F;align-self:center">A TINY TALE</p>
+      <h2 class="section-title sticker" style="text-align:center">Leo and the Secret Sock</h2>
+      <p style="margin:0;text-align:center;font-weight:800;font-size:18px;color:var(--ink)">Tap Next to read Anabia's funny mini adventure!</p>
+      <div class="story-reader" id="story-reader" aria-live="polite"></div>
+    </div>
+    <svg class="wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0,60 C240,0 480,120 720,60 C960,0 1200,120 1440,60 L1440,120 L0,120 Z" fill="#FFC2D1"/></svg>
   </section>
 
   <section class="section leo-section" id="leo">
@@ -340,6 +351,79 @@ document.getElementById('pet-leo').addEventListener('click', async () => {
   document.getElementById('pet-leo').textContent = state.meow ? 'Leo is happy!' : 'Pet Leo'
   if (state.meow) sfx('meow')
 })
+
+const FUNNY_STORY = [
+  {
+    emoji: '📓',
+    title: 'Packing time!',
+    text: 'Anabia packed her notebook. Leo packed three snacks… and one mysterious sock. “Leo,” said Anabia, “we are going on an adventure, not laundry day.”',
+  },
+  {
+    emoji: '🧦',
+    title: 'The sock stays',
+    text: 'Leo blinked slowly. The sock stayed in the backpack. Anabia sighed. “Fine. But if the sock causes trouble, I’m blaming you.” Leo looked proud.',
+  },
+  {
+    emoji: '🌞',
+    title: 'Sunny path',
+    text: 'They followed the sunny path. Leo sniffed every flower. “Important research,” Anabia wrote. (Leo was mostly looking for more snacks.)',
+  },
+  {
+    emoji: '🦋',
+    title: 'Butterfly boss',
+    text: 'A butterfly landed on Leo’s fluffy head. Leo froze like a statue. Anabia whispered, “Don’t move…” Leo did not move. For five whole seconds. Then he sneezed. The butterfly zoomed away!',
+  },
+  {
+    emoji: '😱',
+    title: 'A tiny scream?',
+    text: 'Suddenly — “EEEP!” Something jumped behind a bush. Anabia held Leo’s paw. They peeked… and found Anabia’s little sister giggling. “Got you!” said Sissy.',
+  },
+  {
+    emoji: '🎉',
+    title: 'The sock’s secret',
+    text: 'Sissy pulled the sock from Leo’s bag. Inside was a shiny sticker that said BRAVE EXPLORER. “Surprise!” Leo purred. Anabia laughed so hard she wrote the whole story down. THE END… for now!',
+  },
+]
+
+let storyPage = 0
+
+function renderFunnyStory() {
+  const root = document.getElementById('story-reader')
+  if (!root) return
+  const page = FUNNY_STORY[storyPage]
+  const last = storyPage === FUNNY_STORY.length - 1
+  root.innerHTML = `
+    <div class="story-card">
+      <img src="${LEO_HEAD}" alt="" class="story-leo" width="88" />
+      <p class="story-page-num">Page ${storyPage + 1} of ${FUNNY_STORY.length}</p>
+      <p class="story-emoji" aria-hidden="true">${page.emoji}</p>
+      <h3>${page.title}</h3>
+      <p class="story-text">${page.text}</p>
+      <div class="story-nav">
+        <button type="button" class="btn btn-white btn-sm" id="story-back" ${storyPage === 0 ? 'disabled' : ''}>Back</button>
+        <button type="button" class="btn btn-yellow btn-sm" id="story-next">${last ? 'Read again' : 'Next'}</button>
+      </div>
+      ${last ? `<a class="btn btn-accent btn-sm lift" href="#games" style="margin-top:10px">Play a game with Leo</a>` : ''}
+    </div>
+  `
+  root.querySelector('#story-back')?.addEventListener('click', () => {
+    storyPage = Math.max(0, storyPage - 1)
+    sfx('whoosh')
+    renderFunnyStory()
+  })
+  root.querySelector('#story-next')?.addEventListener('click', () => {
+    if (last) {
+      storyPage = 0
+      sfx('chime')
+    } else {
+      storyPage++
+      sfx('whoosh')
+    }
+    renderFunnyStory()
+  })
+}
+
+renderFunnyStory()
 
 const TABS = [
   ['find', 'Find Leo'],
