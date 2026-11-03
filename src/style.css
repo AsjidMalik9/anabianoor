@@ -19,6 +19,8 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 body {
@@ -27,6 +29,21 @@ body {
   color: var(--ink);
   background: var(--sky);
   overflow-x: hidden;
+  max-width: 100%;
+  position: relative;
+}
+
+/* Kill sideways page scroll from wings / shadows / absolute art */
+.site-header,
+.hero,
+.section,
+.site-footer,
+.book-section,
+.leo-section,
+.games-section,
+.about-section {
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 a {
@@ -38,6 +55,7 @@ a:hover {
 
 img {
   max-width: 100%;
+  height: auto;
 }
 
 .sticker {
@@ -583,6 +601,21 @@ img {
   max-width: 1180px;
   margin: 0 auto;
   padding: 60px 24px 90px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.book-copy,
+.leo-copy,
+.about-copy,
+.hero-copy {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.meta-grid {
+  width: 100%;
+  max-width: 100%;
 }
 
 .book-section {
@@ -1549,9 +1582,56 @@ img {
     gap: 24px;
   }
 
+  .book-wing,
+  .hero-grass {
+    display: none;
+  }
+
+  .book-cover {
+    transform: none;
+  }
+
   .book-spine-row {
     width: min(260px, 78vw);
     height: 340px;
+    max-width: 100%;
+  }
+
+  .book-front {
+    box-shadow: 8px 8px 0 var(--ink);
+  }
+
+  .meta-grid {
+    grid-template-columns: 1fr !important;
+    max-width: 100%;
+  }
+
+  .meta-card {
+    transform: none !important;
+  }
+
+  .meow-bubble {
+    right: 8px;
+    left: auto;
+    top: -24px;
+    font-size: 18px;
+    padding: 8px 12px;
+  }
+
+  .leo-circle {
+    overflow: hidden;
+  }
+
+  .game-tabs {
+    max-width: 100%;
+  }
+
+  .games-inner,
+  .leo-layout,
+  .about-inner,
+  .section-inner {
+    max-width: 100%;
+    overflow-x: hidden;
   }
 
   .leo-circle {
