@@ -1,5 +1,10 @@
 import { unlock, sfx, isMuted, setMuted } from './audio.js'
 
+// Prefer HTTPS in the address bar (fixes lingering “Not Secure” on http://)
+if (location.protocol === 'http:' && location.hostname.endsWith('anabianoor.com')) {
+  location.replace(`https://${location.host}${location.pathname}${location.search}${location.hash}`)
+}
+
 const LEO = '/assets/95cd76ec584c06feb00fea19b44f82fa.png'
 const LEO_HEAD = '/assets/7d320cd100d2e470748a088899d68db2.png'
 const ANABIA = '/assets/3ff70f0aba58875c123f0e3ff933b489.png'

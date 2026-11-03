@@ -1269,18 +1269,26 @@ img {
 }
 
 @media (max-width: 720px) {
-  /* Taller wrapped nav → bigger jump offset */
+  /* Don't pin the header on phones — it was covering Games */
+  .site-header {
+    position: static;
+  }
+
   #top,
   #book,
   #leo,
   #games,
   #about {
-    scroll-margin-top: 150px;
+    scroll-margin-top: 12px;
   }
 
   .nav {
     padding: 10px 12px;
     gap: 8px;
+  }
+
+  .logo span {
+    font-size: 18px;
   }
 
   .nav-links {
@@ -1291,40 +1299,97 @@ img {
   .pill {
     padding: 8px 12px;
     font-size: 14px;
+    flex: 1 1 auto;
+    text-align: center;
   }
 
   .games-inner {
-    padding-top: 28px;
+    padding: 24px 14px 64px;
+    gap: 18px;
   }
 
   .game-tabs {
-    position: sticky;
-    top: 130px;
-    z-index: 40;
-    background: var(--sun);
-    padding: 8px 0;
+    position: static;
+    background: transparent;
+    padding: 0;
+  }
+
+  .game-board {
+    padding: 18px 14px;
+    min-height: 0;
+    border-radius: 22px;
+  }
+
+  .tab {
+    min-height: 48px;
+    padding: 10px 14px;
+    font-size: 15px;
+  }
+
+  .section-title {
+    font-size: clamp(34px, 9vw, 52px);
   }
 
   .hero-inner {
-    padding-top: 70px;
+    padding: 48px 16px 24px;
+    gap: 28px;
   }
+
   .hero-stage {
     height: auto;
-    min-height: 420px;
+    min-height: 380px;
+    width: min(100%, 360px);
   }
+
   .leo-says,
   .new-book {
     display: none;
   }
+
   .meta-grid,
   .fact-grid,
-  .stat-row,
-  .cards {
+  .stat-row {
     grid-template-columns: 1fr 1fr;
   }
+
+  .cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .card {
+    height: 88px;
+    font-size: 32px;
+  }
+
+  .spots {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .spot {
+    height: 140px;
+  }
+
   .hero-circle {
     left: 12px;
     width: calc(100% - 24px);
+  }
+
+  .hero-hi {
+    font-size: clamp(40px, 12vw, 64px);
+  }
+
+  .book-layout,
+  .leo-layout,
+  .about-row {
+    gap: 28px;
+  }
+
+  .section-inner,
+  .leo-layout,
+  .about-inner {
+    padding-left: 16px;
+    padding-right: 16px;
   }
 }
 
