@@ -192,6 +192,15 @@ img {
   z-index: 50;
 }
 
+/* Leave room under sticky header when jumping to #book / #games / etc. */
+#top,
+#book,
+#leo,
+#games,
+#about {
+  scroll-margin-top: 96px;
+}
+
 .nav {
   max-width: 1180px;
   margin: 0 auto;
@@ -780,7 +789,7 @@ img {
 .games-inner {
   max-width: 1180px;
   margin: 0 auto;
-  padding: 40px 24px 80px;
+  padding: 56px 24px 80px;
   display: flex;
   flex-direction: column;
   gap: 28px;
@@ -1260,6 +1269,42 @@ img {
 }
 
 @media (max-width: 720px) {
+  /* Taller wrapped nav → bigger jump offset */
+  #top,
+  #book,
+  #leo,
+  #games,
+  #about {
+    scroll-margin-top: 150px;
+  }
+
+  .nav {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .nav-links {
+    width: 100%;
+    gap: 8px;
+  }
+
+  .pill {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  .games-inner {
+    padding-top: 28px;
+  }
+
+  .game-tabs {
+    position: sticky;
+    top: 130px;
+    z-index: 40;
+    background: var(--sun);
+    padding: 8px 0;
+  }
+
   .hero-inner {
     padding-top: 70px;
   }
