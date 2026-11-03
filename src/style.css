@@ -1394,42 +1394,66 @@ img {
     padding: 9px 8px;
   }
 
+  .games-header {
+    gap: 6px;
+  }
+
   .games-header .section-title {
-    font-size: clamp(28px, 8vw, 40px);
+    font-size: clamp(26px, 7vw, 34px);
+  }
+
+  .games-header p:not(.game-chip) {
+    font-size: 15px !important;
+  }
+
+  /* While in Games, hide the big title block so the board fits */
+  body.games-focus .games-header .section-title,
+  body.games-focus .games-header p:not(.game-chip) {
+    display: none;
+  }
+
+  body.games-focus .games-inner {
+    padding-top: 12px;
   }
 
   .games-inner {
-    padding: 20px 12px 48px;
-    gap: 14px;
+    padding: 16px 12px 40px;
+    gap: 12px;
   }
 
   .game-tabs {
-    flex-wrap: nowrap;
+    flex-wrap: nowrap !important;
     justify-content: flex-start;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     gap: 8px;
-    padding-bottom: 4px;
+    padding: 2px 2px 8px;
     scrollbar-width: thin;
   }
 
   .game-tabs .tab {
     flex: 0 0 auto;
-    min-height: 42px;
+    min-height: 40px;
     padding: 8px 12px;
-    font-size: 14px;
+    font-size: 13px;
     white-space: nowrap;
+    box-shadow: 0 4px 0 var(--ink);
   }
 
   .game-board {
-    padding: 14px 10px;
+    padding: 12px 10px;
     min-height: 0;
     border-radius: 18px;
-    box-shadow: 8px 8px 0 var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+    border-width: 4px;
+  }
+
+  .game-panel {
+    gap: 12px;
   }
 
   .game-panel h3 {
-    font-size: clamp(24px, 7vw, 34px);
+    font-size: clamp(22px, 6.5vw, 30px);
   }
 
   .status {

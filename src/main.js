@@ -316,17 +316,21 @@ document.body.addEventListener(
   { once: true }
 )
 
-// Compact header while Games is on screen so play area stays clear
+// Compact chrome while Games is on screen so play area stays clear
 const gamesSection = document.getElementById('games')
-if (gamesSection && 'IntersectionObserver' in window) {
-  const io = new IntersectionObserver(
-    ([entry]) => {
-      document.body.classList.toggle('games-focus', entry.isIntersecting && entry.intersectionRatio > 0.2)
-    },
-    { threshold: [0.15, 0.35, 0.55] }
-  )
-  io.observe(gamesSection)
+function syncGamesFocus() {
+  const onGames = location.hash === '#games'
+  let visible = onGames
+  if (gamesSection) {
+    const r = gamesSection.getBoundingClientRect()
+    visible = r.top < window.innerHeight * 0.65 && r.bottom > 80
+  }
+  document.body.classList.toggle('games-focus', visible)
+  if (visible) closeMenu()
 }
+window.addEventListener('hashchange', syncGamesFocus)
+window.addEventListener('scroll', syncGamesFocus, { passive: true })
+syncGamesFocus()
 
 document.getElementById('pet-leo').addEventListener('click', async () => {
   await unlock()
